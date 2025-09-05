@@ -10,8 +10,9 @@ import { DemoCommunityScreen } from "@/screens/DemoCommunityScreen"
 import { DemoDebugScreen } from "@/screens/DemoDebugScreen"
 import { DemoPodcastListScreen } from "@/screens/DemoPodcastListScreen"
 import { DemoShowroomScreen } from "@/screens/DemoShowroomScreen/DemoShowroomScreen"
-import type { ThemedStyle } from "@/theme/types"
+import { MSTDemoScreen } from "@/screens/MSTDemoScreen"
 import { useAppTheme } from "@/theme/context"
+import type { ThemedStyle } from "@/theme/types"
 
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 
@@ -20,6 +21,7 @@ export type DemoTabParamList = {
   DemoShowroom: { queryIndex?: string; itemIndex?: string }
   DemoDebug: undefined
   DemoPodcastList: undefined
+  MSTDemo: undefined
 }
 
 /**
@@ -110,6 +112,17 @@ export function DemoNavigator() {
             tabBarLabel: translate("demoNavigator:debugTab"),
             tabBarIcon: ({ focused }) => (
               <Icon icon="debug" color={focused ? colors.tint : colors.tintInactive} size={30} />
+            ),
+          }}
+        />
+
+        <Tab.Screen
+          name="MSTDemo"
+          component={MSTDemoScreen}
+          options={{
+            tabBarLabel: "MST Store",
+            tabBarIcon: ({ focused }) => (
+              <Icon icon="settings" color={focused ? colors.tint : colors.tintInactive} size={30} />
             ),
           }}
         />
