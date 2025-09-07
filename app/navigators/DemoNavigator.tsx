@@ -4,13 +4,9 @@ import { CompositeScreenProps } from "@react-navigation/native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { Icon } from "@/components/Icon"
-import { EpisodeProvider } from "@/context/EpisodeContext"
 import { translate } from "@/i18n/translate"
 import { DemoCommunityScreen } from "@/screens/DemoCommunityScreen"
 import { DemoDebugScreen } from "@/screens/DemoDebugScreen"
-import { DemoPodcastListScreen } from "@/screens/DemoPodcastListScreen"
-import { DemoShowroomScreen } from "@/screens/DemoShowroomScreen/DemoShowroomScreen"
-import { MSTDemoScreen } from "@/screens/MSTDemoScreen"
 import { useAppTheme } from "@/theme/context"
 import type { ThemedStyle } from "@/theme/types"
 
@@ -51,83 +47,39 @@ export function DemoNavigator() {
   } = useAppTheme()
 
   return (
-    <EpisodeProvider>
-      <Tab.Navigator
-        screenOptions={{
-          headerShown: false,
-          tabBarHideOnKeyboard: true,
-          tabBarStyle: themed([$tabBar, { height: bottom + 70 }]),
-          tabBarActiveTintColor: colors.text,
-          tabBarInactiveTintColor: colors.text,
-          tabBarLabelStyle: themed($tabBarLabel),
-          tabBarItemStyle: themed($tabBarItem),
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarHideOnKeyboard: true,
+        tabBarStyle: themed([$tabBar, { height: bottom + 70 }]),
+        tabBarActiveTintColor: colors.text,
+        tabBarInactiveTintColor: colors.text,
+        tabBarLabelStyle: themed($tabBarLabel),
+        tabBarItemStyle: themed($tabBarItem),
+      }}
+    >
+      <Tab.Screen
+        name="DemoCommunity"
+        component={DemoCommunityScreen}
+        options={{
+          tabBarLabel: translate("demoNavigator:communityTab"),
+          tabBarIcon: ({ focused }) => (
+            <Icon icon="community" color={focused ? colors.tint : colors.tintInactive} size={30} />
+          ),
         }}
-      >
-        <Tab.Screen
-          name="DemoShowroom"
-          component={DemoShowroomScreen}
-          options={{
-            tabBarLabel: translate("demoNavigator:componentsTab"),
-            tabBarIcon: ({ focused }) => (
-              <Icon
-                icon="components"
-                color={focused ? colors.tint : colors.tintInactive}
-                size={30}
-              />
-            ),
-          }}
-        />
+      />
 
-        <Tab.Screen
-          name="DemoCommunity"
-          component={DemoCommunityScreen}
-          options={{
-            tabBarLabel: translate("demoNavigator:communityTab"),
-            tabBarIcon: ({ focused }) => (
-              <Icon
-                icon="community"
-                color={focused ? colors.tint : colors.tintInactive}
-                size={30}
-              />
-            ),
-          }}
-        />
-
-        <Tab.Screen
-          name="DemoPodcastList"
-          component={DemoPodcastListScreen}
-          options={{
-            tabBarAccessibilityLabel: translate("demoNavigator:podcastListTab"),
-            tabBarLabel: translate("demoNavigator:podcastListTab"),
-            tabBarIcon: ({ focused }) => (
-              <Icon icon="podcast" color={focused ? colors.tint : colors.tintInactive} size={30} />
-            ),
-          }}
-        />
-
-        <Tab.Screen
-          name="DemoDebug"
-          component={DemoDebugScreen}
-          options={{
-            tabBarLabel: translate("demoNavigator:debugTab"),
-            tabBarIcon: ({ focused }) => (
-              <Icon icon="debug" color={focused ? colors.tint : colors.tintInactive} size={30} />
-            ),
-          }}
-        />
-
-        <Tab.Screen
-          name="MSTDemo"
-          component={MSTDemoScreen}
-          options={{
-            tabBarLabel: "MST Store",
-            tabBarIcon: ({ focused }) => (
-              <Icon icon="settings" color={focused ? colors.tint : colors.tintInactive} size={30} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </EpisodeProvider>
+      <Tab.Screen
+        name="DemoDebug"
+        component={DemoDebugScreen}
+        options={{
+          tabBarLabel: translate("demoNavigator:debugTab"),
+          tabBarIcon: ({ focused }) => (
+            <Icon icon="debug" color={focused ? colors.tint : colors.tintInactive} size={30} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   )
 }
 

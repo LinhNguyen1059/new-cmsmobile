@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary-0: #eaffe7;
+    --primary-50: #c6ffc6;
+    --primary-100: #87fc99;
+    --primary-200: #6bde80;
+    --primary-300: #4fc168;
+    --primary-400: #2ea451;
+    --primary-500: #008a38;
+
+    --secondary-0: #eaffe7;
+    --secondary-50: #cffdce;
+    --secondary-100: #c0edc0;
+    --secondary-200: #a3d2a4;
+    --secondary-300: #8ab68a;
+    --secondary-400: #709b71;
+    --secondary-500: #57815b;
+
+    --success-50: #e6f9f1;
+    --success-100: #cef4e4;
+    --success-200: #9ce8c9;
+    --success-300: #6bddae;
+    --success-400: #39d193;
+    --success-500: #08c678;
+
+    --info-50: #eef0ff;
+    --info-100: #dbe1ff;
+    --info-200: #b3c5ff;
+    --info-300: #8aa9ff;
+    --info-400: #5d8bfe;
+    --info-500: #3f71e1;
+
+    --warning-50: #fef9e5;
+    --warning-100: #fef2cc;
+    --warning-200: #fde599;
+    --warning-300: #fbd966;
+    --warning-400: #facc33;
+    --warning-500: #f9bf00;
+
+    --danger-50: #ffece9;
+    --danger-100: #ffdbd6;
+    --danger-200: #ffb4aa;
+    --danger-300: #ff897c;
+    --danger-400: #ff5349;
+    --danger-500: #dd3730;
+
+    --neutral-50: #f0f1f1;
+    --neutral-100: #e1e3e2;
+    --neutral-200: #c4c7c5;
+    --neutral-300: #a6aaa9;
+    --neutral-400: #898e8c;
+    --neutral-500: #6b726f;
+
+    --background: #FFFFFF;
+
+    --black: #000000;
+
+    --white: #FFFFFF;
+  }
+
+  .dark:root {
+    --primary-0: #eaffe7;
+    --primary-50: #c6ffc6;
+    --primary-100: #87fc99;
+    --primary-200: #6bde80;
+    --primary-300: #4fc168;
+    --primary-400: #2ea451;
+    --primary-500: #008a38;
+
+    --secondary-0: #eaffe7;
+    --secondary-50: #cffdce;
+    --secondary-100: #c0edc0;
+    --secondary-200: #a3d2a4;
+    --secondary-300: #8ab68a;
+    --secondary-400: #709b71;
+    --secondary-500: #57815b;
+
+    --success-50: #e6f9f1;
+    --success-100: #cef4e4;
+    --success-200: #9ce8c9;
+    --success-300: #6bddae;
+    --success-400: #39d193;
+    --success-500: #08c678;
+
+    --info-50: #eef0ff;
+    --info-100: #dbe1ff;
+    --info-200: #b3c5ff;
+    --info-300: #8aa9ff;
+    --info-400: #5d8bfe;
+    --info-500: #3f71e1;
+
+    --warning-50: #fef9e5;
+    --warning-100: #fef2cc;
+    --warning-200: #fde599;
+    --warning-300: #fbd966;
+    --warning-400: #facc33;
+    --warning-500: #f9bf00;
+
+    --danger-50: #ffece9;
+    --danger-100: #ffdbd6;
+    --danger-200: #ffb4aa;
+    --danger-300: #ff897c;
+    --danger-400: #ff5349;
+    --danger-500: #dd3730;
+
+    --neutral-50: #f0f1f1;
+    --neutral-100: #e1e3e2;
+    --neutral-200: #c4c7c5;
+    --neutral-300: #a6aaa9;
+    --neutral-400: #898e8c;
+    --neutral-500: #6b726f;
+
+    --background: #000000;
+
+    --black: #000000;
+
+    --white: #FFFFFF;
+  }
+}

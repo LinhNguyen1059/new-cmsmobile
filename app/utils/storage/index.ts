@@ -2,6 +2,8 @@ import { MMKV } from "react-native-mmkv"
 
 export const storage = new MMKV()
 
+export const USER_STORAGE_KEY = "user"
+
 /**
  * Loads a string from storage.
  *

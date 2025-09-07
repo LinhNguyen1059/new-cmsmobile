@@ -6,5 +6,6 @@
  * https://reactnative.dev/docs/security#storing-sensitive-info
  */
 export default {
-  API_URL: "https://api.rss2json.com/v1/",
+  API_URL: "https://api.yourdomain.com/v1/",
+  I3HOST_API_URL: "https://user-api.yourdomain.com/v1/",
 }

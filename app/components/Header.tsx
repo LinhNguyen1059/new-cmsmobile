@@ -16,7 +16,7 @@ import type { ThemedStyle } from "@/theme/types"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 
 import { IconTypes, PressableIcon } from "./Icon"
-import { Text, TextProps } from "./Text"
+import { Text, TextProps } from "./ui/Text"
 
 export interface HeaderProps {
   /**
@@ -207,12 +207,7 @@ export function Header(props: HeaderProps) {
               $titleContainerStyleOverride,
             ]}
           >
-            <Text
-              weight="medium"
-              size="md"
-              text={titleContent}
-              style={[$title, $titleStyleOverride]}
-            />
+            <Text variant="header" text={titleContent} style={[$title, $titleStyleOverride]} />
           </View>
         )}
 
@@ -251,7 +246,7 @@ function HeaderAction(props: HeaderActionProps) {
         disabled={!onPress}
         activeOpacity={0.8}
       >
-        <Text weight="medium" size="md" text={content} style={themed($actionText)} />
+        <Text variant="header" text={content} />
       </TouchableOpacity>
     )
   }
@@ -293,10 +288,6 @@ const $actionTextContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   height: "100%",
   paddingHorizontal: spacing.md,
   zIndex: 2,
-})
-
-const $actionText: ThemedStyle<TextStyle> = ({ colors }) => ({
-  color: colors.tint,
 })
 
 const $actionIconContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({

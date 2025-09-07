@@ -17,18 +17,20 @@ if (__DEV__) {
   require("./devtools/ReactotronConfig.ts")
 }
 import "./utils/gestureHandler"
+import "../global.css"
 
 import { useEffect, useState } from "react"
 import { useFonts } from "expo-font"
-import * as Linking from "expo-linking"
+import * as SplashScreen from "expo-splash-screen"
+import { PortalHost } from "@rn-primitives/portal"
 import { KeyboardProvider } from "react-native-keyboard-controller"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 
-import { AuthProvider } from "./context/AuthContext"
 import { initI18n } from "./i18n"
 import { AppNavigator } from "./navigators/AppNavigator"
+import { config, prefix } from "./navigators/linking"
 import { useNavigationPersistence } from "./navigators/navigationUtilities"
-import { StoreProvider } from "./stores"
+import { useInitialRootStore } from "./stores/utils/useStores"
 import { ThemeProvider } from "./theme/context"
 import { customFontsToLoad } from "./theme/typography"
 import { loadDateFnsLocale } from "./utils/formatDate"
@@ -36,26 +38,7 @@ import * as storage from "./utils/storage"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
-// Web linking configuration
-const prefix = Linking.createURL("/")
-const config = {
-  screens: {
-    Login: {
-      path: "",
-    },
-    Welcome: "welcome",
-    Demo: {
-      screens: {
-        DemoShowroom: {
-          path: "showroom/:queryIndex?/:itemIndex?",
-        },
-        DemoDebug: "debug",
-        DemoPodcastList: "podcast",
-        DemoCommunity: "community",
-      },
-    },
-  },
-}
+SplashScreen.preventAutoHideAsync()
 
 /**
  * This is the root component of our app.
@@ -78,13 +61,24 @@ export function App() {
       .then(() => loadDateFnsLocale())
   }, [])
 
+  const { rehydrated } = useInitialRootStore()
+
+  const loaded =
+    rehydrated && isNavigationStateRestored && isI18nInitialized && areFontsLoaded && !fontLoadError
+
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync()
+    }
+  }, [loaded])
+
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
   // color set in native by rootView's background color.
   // In iOS: application:didFinishLaunchingWithOptions:
   // In Android: https://stackoverflow.com/a/45838109/204044
   // You can replace with your own loading component if you wish.
-  if (!isNavigationStateRestored || !isI18nInitialized || (!areFontsLoaded && !fontLoadError)) {
+  if (!loaded) {
     return null
   }
 
@@ -97,17 +91,14 @@ export function App() {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <KeyboardProvider>
-        <StoreProvider>
-          <AuthProvider>
-            <ThemeProvider>
-              <AppNavigator
-                linking={linking}
-                initialState={initialNavigationState}
-                onStateChange={onNavigationStateChange}
-              />
-            </ThemeProvider>
-          </AuthProvider>
-        </StoreProvider>
+        <ThemeProvider>
+          <AppNavigator
+            linking={linking}
+            initialState={initialNavigationState}
+            onStateChange={onNavigationStateChange}
+          />
+          <PortalHost />
+        </ThemeProvider>
       </KeyboardProvider>
     </SafeAreaProvider>
   )

@@ -7,7 +7,7 @@ import {
   useEffect,
   useMemo,
 } from "react"
-import { StyleProp, useColorScheme } from "react-native"
+import { StyleProp, useColorScheme as useRNColorScheme } from "react-native"
 import {
   DarkTheme as NavDarkTheme,
   DefaultTheme as NavDefaultTheme,
@@ -16,6 +16,7 @@ import {
 import { useMMKVString } from "react-native-mmkv"
 
 import { storage } from "@/utils/storage"
+import { useColorScheme as useNativeWindColorScheme } from "@/utils/useColorScheme"
 
 import { setImperativeTheming } from "./context.utils"
 import { darkTheme, lightTheme } from "./theme"
@@ -56,9 +57,10 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
   initialContext,
 }) => {
   // The operating system theme:
-  const systemColorScheme = useColorScheme()
+  const systemColorScheme = useRNColorScheme()
+  const { setColorScheme } = useNativeWindColorScheme()
   // Our saved theme context: can be "light", "dark", or undefined (system theme)
-  const [themeScheme, setThemeScheme] = useMMKVString("ignite.themeScheme", storage)
+  const [themeScheme, setThemeScheme] = useMMKVString("cms.themeScheme", storage)
 
   /**
    * This function is used to set the theme context and is exported from the useAppTheme() hook.
@@ -69,8 +71,9 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
   const setThemeContextOverride = useCallback(
     (newTheme: ThemeContextModeT) => {
       setThemeScheme(newTheme)
+      setColorScheme(newTheme === "dark" ? "dark" : "light")
     },
-    [setThemeScheme],
+    [setThemeScheme, setColorScheme],
   )
 
   /**
@@ -79,9 +82,9 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
    * systemColorScheme is the value from the device. If undefined, we fall back to "light"
    */
   const themeContext: ImmutableThemeContextModeT = useMemo(() => {
-    const t = initialContext || themeScheme || (!!systemColorScheme ? systemColorScheme : "light")
+    const t = initialContext || themeScheme || "light"
     return t === "dark" ? "dark" : "light"
-  }, [initialContext, themeScheme, systemColorScheme])
+  }, [initialContext, themeScheme])
 
   const navigationTheme: NavTheme = useMemo(() => {
     switch (themeContext) {
@@ -104,6 +107,13 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
   useEffect(() => {
     setImperativeTheming(theme)
   }, [theme])
+
+  useEffect(() => {
+    setThemeContextOverride(
+      (themeScheme ? themeScheme : (systemColorScheme ?? "light")) as ThemeContextModeT,
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const themed = useCallback(
     <T,>(styleOrStyleFn: AllowedStylesT<T>) => {

@@ -7,12 +7,13 @@
 import { ComponentProps } from "react"
 import { NavigationContainer, NavigatorScreenParams } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
+import { observer } from "mobx-react-lite"
 
 import Config from "@/config"
-import { useAuth } from "@/context/AuthContext"
 import { ErrorBoundary } from "@/screens/ErrorScreen/ErrorBoundary"
 import { LoginScreen } from "@/screens/LoginScreen"
 import { WelcomeScreen } from "@/screens/WelcomeScreen"
+import { useStores } from "@/stores"
 import { useAppTheme } from "@/theme/context"
 
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator"
@@ -49,8 +50,10 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStack
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
-const AppStack = () => {
-  const { isAuthenticated } = useAuth()
+const AppStack = observer(function AppStack() {
+  const {
+    userStore: { user },
+  } = useStores()
 
   const {
     theme: { colors },
@@ -60,17 +63,15 @@ const AppStack = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        navigationBarColor: colors.background,
         contentStyle: {
           backgroundColor: colors.background,
         },
       }}
-      initialRouteName={isAuthenticated ? "Welcome" : "Login"}
+      initialRouteName={user ? "Welcome" : "Login"}
     >
-      {isAuthenticated ? (
+      {user ? (
         <>
           <Stack.Screen name="Welcome" component={WelcomeScreen} />
-
           <Stack.Screen name="Demo" component={DemoNavigator} />
         </>
       ) : (
@@ -80,15 +81,14 @@ const AppStack = () => {
       )}
 
       {/** 🔥 Your screens go here */}
-      {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )
-}
+})
 
 export interface NavigationProps
   extends Partial<ComponentProps<typeof NavigationContainer<AppStackParamList>>> {}
 
-export const AppNavigator = (props: NavigationProps) => {
+export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
   const { navigationTheme } = useAppTheme()
 
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
@@ -100,4 +100,4 @@ export const AppNavigator = (props: NavigationProps) => {
       </ErrorBoundary>
     </NavigationContainer>
   )
-}
+})

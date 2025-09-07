@@ -1,6 +1,6 @@
 {
-  "name": "CMSMobile",
-  "slug": "CMSMobile",
+  "name": "CMS",
+  "slug": "cms-mobile",
   "scheme": "cmsmobile",
   "version": "1.0.0",
   "orientation": "portrait",

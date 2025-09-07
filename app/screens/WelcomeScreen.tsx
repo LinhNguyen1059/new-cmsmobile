@@ -1,110 +1,45 @@
 import { FC } from "react"
-import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
+import { Image, View } from "react-native"
 
-import { Button } from "@/components/Button"
 import { Screen } from "@/components/Screen"
-import { Text } from "@/components/Text"
-import { useAuth } from "@/context/AuthContext"
-import { isRTL } from "@/i18n"
+import { Button, Text } from "@/components/ui"
 import type { AppStackScreenProps } from "@/navigators/AppNavigator"
-import { useAppTheme } from "@/theme/context"
-import { $styles } from "@/theme/styles"
-import type { ThemedStyle } from "@/theme/types"
-import { useHeader } from "@/utils/useHeader"
-import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 
 const welcomeLogo = require("@assets/images/logo.png")
-const welcomeFace = require("@assets/images/welcome-face.png")
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
 export const WelcomeScreen: FC<WelcomeScreenProps> = function WelcomeScreen(_props) {
-  const { themed, theme } = useAppTheme()
-
   const { navigation } = _props
-  const { logout } = useAuth()
 
   function goNext() {
     navigation.navigate("Demo", { screen: "DemoShowroom", params: {} })
   }
 
-  useHeader(
-    {
-      rightTx: "common:logOut",
-      onRightPress: logout,
-    },
-    [logout],
-  )
-
-  const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
-
   return (
-    <Screen preset="fixed" contentContainerStyle={$styles.flex1}>
-      <View style={themed($topContainer)}>
-        <Image style={themed($welcomeLogo)} source={welcomeLogo} resizeMode="contain" />
+    <Screen
+      preset="fixed"
+      className="px-4"
+      contentContainerClassName="flex-1"
+      safeAreaEdges={["top", "bottom"]}
+    >
+      <View className="flex-1 justify-center">
+        <Image source={welcomeLogo} resizeMode="contain" className="mx-auto mb-8" />
         <Text
           testID="welcome-heading"
-          style={themed($welcomeHeading)}
           tx="welcomeScreen:readyForLaunch"
-          preset="heading"
+          variant="h3"
+          className="text-center"
         />
-        <Text tx="welcomeScreen:exciting" preset="subheading" />
-        <Image
-          style={$welcomeFace}
-          source={welcomeFace}
-          resizeMode="contain"
-          tintColor={theme.colors.palette.neutral900}
-        />
-      </View>
-
-      <View style={themed([$bottomContainer, $bottomContainerInsets])}>
-        <Text tx="welcomeScreen:postscript" size="md" />
-
+        <Text tx="welcomeScreen:exciting" variant="h5" className="mb-4 text-center" />
+        <Text tx="welcomeScreen:postscript" className="text-center" />
         <Button
           testID="next-screen-button"
-          preset="reversed"
           tx="welcomeScreen:letsGo"
           onPress={goNext}
+          className="mt-6"
         />
       </View>
     </Screen>
   )
 }
-
-const $topContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  flexShrink: 1,
-  flexGrow: 1,
-  flexBasis: "57%",
-  justifyContent: "center",
-  paddingHorizontal: spacing.lg,
-})
-
-const $bottomContainer: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
-  flexShrink: 1,
-  flexGrow: 0,
-  flexBasis: "43%",
-  backgroundColor: colors.palette.neutral100,
-  borderTopLeftRadius: 16,
-  borderTopRightRadius: 16,
-  paddingHorizontal: spacing.lg,
-  justifyContent: "space-around",
-})
-
-const $welcomeLogo: ThemedStyle<ImageStyle> = ({ spacing }) => ({
-  height: 88,
-  width: "100%",
-  marginBottom: spacing.xxl,
-})
-
-const $welcomeFace: ImageStyle = {
-  height: 169,
-  width: 269,
-  position: "absolute",
-  bottom: -47,
-  right: -80,
-  transform: [{ scaleX: isRTL ? -1 : 1 }],
-}
-
-const $welcomeHeading: ThemedStyle<TextStyle> = ({ spacing }) => ({
-  marginBottom: spacing.md,
-})

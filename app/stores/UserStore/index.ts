@@ -1,60 +1,96 @@
-/**
- * UserStore Module
- * 
- * A modular MobX-State-Tree store for user management, authentication,
- * and preferences. This module is organized into separate files for
- * better maintainability:
- * 
- * - models.ts: Data models (User, UserSession, UserPreferences)
- * - views.ts: Computed values and getters
- * - actions.ts: State mutations and business logic
- * - UserStore.ts: Main store combining all parts
- */
+import { types, Instance, flow } from "mobx-state-tree"
 
-// Main store export
-export { UserStore } from "./UserStore"
-export type { UserStoreType } from "./UserStore"
+import { load, remove, save, USER_STORAGE_KEY } from "@/utils/storage"
 
-// Model exports
-export { User, UserSession, UserPreferences } from "./models"
-export type { UserType, UserSessionType, UserPreferencesType } from "./models"
-
-// Type interfaces export
-export type { 
-  IUserStore, 
-  IUserStoreModel, 
-  IUserStoreViews, 
-  IUserStoreActions, 
-  IUserStoreAsyncActions 
-} from "./types"
-
-// Views and actions are not exported directly since they're composed into UserStore
-// but you can import them if you need to test them separately:
-// import { userStoreViews } from "./views"
-// import { userStoreActions, userStoreAsyncActions } from "./actions"
+import { AuthModel } from "./Auth/model"
+import { UserModel } from "./User/model"
+import { IUserModel } from "./User/types"
+import { withSetPropAction } from "../utils/withSetPropAction"
 
 /**
- * Directory Structure:
- * 
- * app/stores/UserStore/
- * ├── index.ts          # This file - main exports
- * ├── UserStore.ts      # Main store definition
- * ├── models.ts         # Data models
- * ├── views.ts          # Computed values
- * └── actions.ts        # Business logic
- * 
- * Benefits of this structure:
- * 
- * 1. **Separation of Concerns**: Each file has a specific responsibility
- * 2. **Easier Testing**: You can test models, views, and actions separately
- * 3. **Better Maintainability**: Large stores don't become unwieldy
- * 4. **Reusability**: Models can be reused in different stores
- * 5. **Team Development**: Multiple developers can work on different aspects
- * 6. **Code Organization**: Related functionality is grouped together
- * 
- * Usage:
- * ```tsx
- * import { UserStore } from "@/stores/UserStore"
- * import { User } from "@/stores/UserStore" // Individual model if needed
- * ```
+ * UserStore model definition
  */
+const UserStoreModel = types
+  .model("UserStore", {
+    user: types.maybeNull(UserModel),
+    auth: types.optional(AuthModel, {}),
+  })
+  .actions(withSetPropAction)
+  .actions((self) => ({
+    /**
+     * Set the current user
+     */
+    setUser(userData: {
+      id: string
+      email: string
+      firstName?: string
+      lastName?: string
+      avatar?: string
+    }) {
+      self.user = UserModel.create(userData)
+      // Persist to storage
+      save(USER_STORAGE_KEY, JSON.stringify(userData))
+    },
+
+    /**
+     * Clear the current user (logout)
+     */
+    clearUser() {
+      self.user = null
+      // Remove from storage
+      remove(USER_STORAGE_KEY)
+    },
+
+    /**
+     * Initialize user from storage
+     */
+    initializeUser: flow(function* () {
+      try {
+        const userData = load<IUserModel>(USER_STORAGE_KEY)
+        if (userData) {
+          self.user = UserModel.create(userData)
+        }
+      } catch (error) {
+        console.warn("Failed to initialize user from storage:", error)
+      }
+    }),
+  }))
+
+/**
+ * UserStore - Main store for user authentication and profile management
+ * Uses MobX-State-Tree's automatic type inference for full type safety
+ */
+export const UserStore = UserStoreModel
+
+/**
+ * Initial state for UserStore
+ * Provides default values that match the model structure
+ */
+export const initialUserStore = {
+  user: null,
+  auth: {
+    email: "",
+    password: "",
+  },
+}
+
+// Export types using MobX-State-Tree's automatic type inference
+export type IUserStore = Instance<typeof UserStore>
+export type UserStoreType = typeof UserStore
+
+// Export individual model types for convenience
+export type { IUserModel } from "./User/types"
+export type { IAuth } from "./Auth/types"
+
+// Export UserStore actions interface
+export interface IUserStoreActions {
+  setUser(userData: {
+    id: string
+    email: string
+    firstName?: string
+    lastName?: string
+    avatar?: string
+  }): void
+  clearUser(): void
+  initializeUser(): Promise<void>
+}

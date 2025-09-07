@@ -10,13 +10,12 @@ import {
 } from "react-native"
 import * as Application from "expo-application"
 
-import { Button } from "@/components/Button"
 import { ListItem } from "@/components/ListItem"
 import { Screen } from "@/components/Screen"
-import { Text } from "@/components/Text"
-import { useAuth } from "@/context/AuthContext"
+import { Button, Text } from "@/components/ui"
 import { isRTL } from "@/i18n"
 import { DemoTabScreenProps } from "@/navigators/DemoNavigator"
+import { useStores } from "@/stores"
 import { useAppTheme } from "@/theme/context"
 import { $styles } from "@/theme/styles"
 import type { ThemedStyle } from "@/theme/types"
@@ -34,8 +33,10 @@ const usingHermes = typeof HermesInternal === "object" && HermesInternal !== nul
 export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function DemoDebugScreen(
   _props,
 ) {
+  const {
+    userStore: { clearUser },
+  } = useStores()
   const { setThemeContextOverride, themeContext, themed } = useAppTheme()
-  const { logout } = useAuth()
 
   // @ts-expect-error
   const usingFabric = global.nativeFabricUIManager != null
@@ -146,7 +147,7 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
         <Text style={themed($hint)} tx={`demoDebugScreen:${Platform.OS}ReactotronHint` as const} />
       </View>
       <View style={themed($buttonContainer)}>
-        <Button style={themed($button)} tx="common:logOut" onPress={logout} />
+        <Button style={themed($button)} tx="common:logOut" onPress={clearUser} />
       </View>
     </Screen>
   )
@@ -183,7 +184,7 @@ const $buttonContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
 })
 
 const $hint: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
-  color: colors.palette.neutral600,
+  color: colors.neutral600,
   fontSize: 12,
   lineHeight: 15,
   paddingBottom: spacing.lg,

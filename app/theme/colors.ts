@@ -1,85 +1,115 @@
-const palette = {
-  neutral100: "#FFFFFF",
-  neutral200: "#F4F2F1",
-  neutral300: "#D7CEC9",
-  neutral400: "#B6ACA6",
-  neutral500: "#978F8A",
-  neutral600: "#564E4A",
-  neutral700: "#3C3836",
-  neutral800: "#191015",
-  neutral900: "#000000",
-
-  primary100: "#F4E0D9",
-  primary200: "#E8C1B4",
-  primary300: "#DDA28E",
-  primary400: "#D28468",
-  primary500: "#C76542",
-  primary600: "#A54F31",
-
-  secondary100: "#DCDDE9",
-  secondary200: "#BCC0D6",
-  secondary300: "#9196B9",
-  secondary400: "#626894",
-  secondary500: "#41476E",
-
-  accent100: "#FFEED4",
-  accent200: "#FFE1B2",
-  accent300: "#FDD495",
-  accent400: "#FBC878",
-  accent500: "#FFBB50",
-
-  angry100: "#F2D6CD",
-  angry500: "#C03403",
-
-  overlay20: "rgba(25, 16, 21, 0.2)",
-  overlay50: "rgba(25, 16, 21, 0.5)",
-} as const
-
 export const colors = {
-  /**
-   * The palette is available to use, but prefer using the name.
-   * This is only included for rare, one-off cases. Try to use
-   * semantic names as much as possible.
-   */
-  palette,
-  /**
-   * A helper for making something see-thru.
-   */
-  transparent: "rgba(0, 0, 0, 0)",
-  /**
-   * The default text color in many components.
-   */
-  text: palette.neutral800,
-  /**
-   * Secondary text information.
-   */
-  textDim: palette.neutral600,
-  /**
-   * The default color of the screen background.
-   */
-  background: palette.neutral200,
-  /**
-   * The default border color.
-   */
-  border: palette.neutral400,
-  /**
-   * The main tinting color.
-   */
-  tint: palette.primary500,
-  /**
-   * The inactive tinting color.
-   */
-  tintInactive: palette.neutral300,
-  /**
-   * A subtle color used for lines.
-   */
-  separator: palette.neutral300,
-  /**
-   * Error messages.
-   */
-  error: palette.angry500,
-  /**
-   * Error Background.
-   */
-  errorBackground: palette.angry100,
-} as const
+  light: {
+    "white": "#FFFFFF",
+    "black": "#000000",
+    "background": "#FFFFFF",
+
+    "primary-0": "#eaffe7",
+    "primary-50": "#c6ffc6",
+    "primary-100": "#87fc99",
+    "primary-200": "#6bde80",
+    "primary-300": "#4fc168",
+    "primary-400": "#2ea451",
+    "primary-500": "#008a38",
+
+    "secondary-0": "#eaffe7",
+    "secondary-50": "#cffdce",
+    "secondary-100": "#c0edc0",
+    "secondary-200": "#a3d2a4",
+    "secondary-300": "#8ab68a",
+    "secondary-400": "#709b71",
+    "secondary-500": "#57815b",
+
+    "success-50": "#e6f9f1",
+    "success-100": "#cef4e4",
+    "success-200": "#9ce8c9",
+    "success-300": "#6bddae",
+    "success-400": "#39d193",
+    "success-500": "#08c678",
+
+    "info-50": "#eef0ff",
+    "info-100": "#dbe1ff",
+    "info-200": "#b3c5ff",
+    "info-300": "#8aa9ff",
+    "info-400": "#5d8bfe",
+    "info-500": "#3f71e1",
+
+    "warning-50": "#fef9e5",
+    "warning-100": "#fef2cc",
+    "warning-200": "#fde599",
+    "warning-300": "#fbd966",
+    "warning-400": "#facc33",
+    "warning-500": "#f9bf00",
+
+    "danger-50": "#ffece9",
+    "danger-100": "#ffdbd6",
+    "danger-200": "#ffb4aa",
+    "danger-300": "#ff897c",
+    "danger-400": "#ff5349",
+    "danger-500": "#dd3730",
+
+    "neutral-50": "#f0f1f1",
+    "neutral-100": "#e1e3e2",
+    "neutral-200": "#c4c7c5",
+    "neutral-300": "#a6aaa9",
+    "neutral-400": "#898e8c",
+    "neutral-500": "#6b726f",
+  },
+
+  dark: {
+    "white": "#FFFFFF",
+    "black": "#000000",
+    "background": "#000000",
+
+    "primary-0": "#eaffe7",
+    "primary-50": "#c6ffc6",
+    "primary-100": "#87fc99",
+    "primary-200": "#6bde80",
+    "primary-300": "#4fc168",
+    "primary-400": "#2ea451",
+    "primary-500": "#008a38",
+
+    "secondary-0": "#eaffe7",
+    "secondary-50": "#cffdce",
+    "secondary-100": "#c0edc0",
+    "secondary-200": "#a3d2a4",
+    "secondary-300": "#8ab68a",
+    "secondary-400": "#709b71",
+    "secondary-500": "#57815b",
+
+    "success-50": "#e6f9f1",
+    "success-100": "#cef4e4",
+    "success-200": "#9ce8c9",
+    "success-300": "#6bddae",
+    "success-400": "#39d193",
+    "success-500": "#08c678",
+
+    "info-50": "#eef0ff",
+    "info-100": "#dbe1ff",
+    "info-200": "#b3c5ff",
+    "info-300": "#8aa9ff",
+    "info-400": "#5d8bfe",
+    "info-500": "#3f71e1",
+
+    "warning-50": "#fef9e5",
+    "warning-100": "#fef2cc",
+    "warning-200": "#fde599",
+    "warning-300": "#fbd966",
+    "warning-400": "#facc33",
+    "warning-500": "#f9bf00",
+
+    "danger-50": "#ffece9",
+    "danger-100": "#ffdbd6",
+    "danger-200": "#ffb4aa",
+    "danger-300": "#ff897c",
+    "danger-400": "#ff5349",
+    "danger-500": "#dd3730",
+
+    "neutral-50": "#f0f1f1",
+    "neutral-100": "#e1e3e2",
+    "neutral-200": "#c4c7c5",
+    "neutral-300": "#a6aaa9",
+    "neutral-400": "#898e8c",
+    "neutral-500": "#6b726f",
+  },
+}

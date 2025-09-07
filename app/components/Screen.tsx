@@ -61,6 +61,14 @@ interface BaseScreenProps {
    * Pass any additional props directly to the KeyboardAvoidingView component.
    */
   KeyboardAvoidingViewProps?: KeyboardAvoidingViewProps
+  /**
+   * Optional className to be used for styling with Tailwind CSS.
+   */
+  className?: string
+  /**
+   * Optional className to be used for styling the content container with Tailwind CSS.
+   */
+  contentContainerClassName?: string
 }
 
 interface FixedScreenProps extends BaseScreenProps {
@@ -173,10 +181,10 @@ function useAutoPreset(props: AutoScreenProps): {
  * @returns {JSX.Element} - The rendered `ScreenWithoutScrolling` component.
  */
 function ScreenWithoutScrolling(props: ScreenProps) {
-  const { style, contentContainerStyle, children, preset } = props
+  const { style, contentContainerStyle, children, contentContainerClassName } = props
   return (
     <View style={[$outerStyle, style]}>
-      <View style={[$innerStyle, preset === "fixed" && $justifyFlexEnd, contentContainerStyle]}>
+      <View style={[$innerStyle, contentContainerStyle]} className={contentContainerClassName}>
         {children}
       </View>
     </View>
@@ -193,6 +201,7 @@ function ScreenWithScrolling(props: ScreenProps) {
     keyboardShouldPersistTaps = "handled",
     keyboardBottomOffset = DEFAULT_BOTTOM_OFFSET,
     contentContainerStyle,
+    contentContainerClassName,
     ScrollViewProps,
     style,
   } = props as ScrollScreenProps
@@ -224,6 +233,7 @@ function ScreenWithScrolling(props: ScreenProps) {
         ScrollViewProps?.contentContainerStyle,
         contentContainerStyle,
       ]}
+      className={contentContainerClassName}
     >
       {children}
     </KeyboardAwareScrollView>
@@ -261,6 +271,7 @@ export function Screen(props: ScreenProps) {
         { backgroundColor: backgroundColor || colors.background },
         $containerInsets,
       ]}
+      className={props.className}
     >
       <SystemBars
         style={systemBarStyle || (themeContext === "dark" ? "light" : "dark")}
@@ -293,10 +304,6 @@ const $outerStyle: ViewStyle = {
   flex: 1,
   height: "100%",
   width: "100%",
-}
-
-const $justifyFlexEnd: ViewStyle = {
-  justifyContent: "flex-end",
 }
 
 const $innerStyle: ViewStyle = {

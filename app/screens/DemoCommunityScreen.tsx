@@ -3,7 +3,7 @@ import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 
 import { ListItem } from "@/components/ListItem"
 import { Screen } from "@/components/Screen"
-import { Text } from "@/components/Text"
+import { Text } from "@/components/ui"
 import { isRTL } from "@/i18n"
 import { DemoTabScreenProps } from "@/navigators/DemoNavigator"
 import { useAppTheme } from "@/theme/context"
