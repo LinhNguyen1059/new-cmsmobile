@@ -1,31 +1,31 @@
-import { ReactNode, forwardRef, ForwardedRef } from "react"
+import { ReactNode, forwardRef, ForwardedRef } from "react";
 // eslint-disable-next-line no-restricted-imports
-import { Text as RNText, TextProps as RNTextProps } from "react-native"
-import { VariantProps, cva } from "class-variance-authority"
-import { TOptions } from "i18next"
+import { Text as RNText, TextProps as RNTextProps } from "react-native";
+import { VariantProps, cva } from "class-variance-authority";
+import { TOptions } from "i18next";
 
-import { TxKeyPath } from "@/i18n"
-import { translate } from "@/i18n/translate"
-import { cn } from "@/utils/cn"
+import { TxKeyPath } from "@/i18n";
+import { translate } from "@/i18n/translate";
+import { cn } from "@/utils/cn";
 
 export interface TextProps extends RNTextProps {
   /**
    * Text which is looked up via i18n.
    */
-  tx?: TxKeyPath
+  tx?: TxKeyPath;
   /**
    * The text to display if not using `tx` or nested components.
    */
-  text?: string
+  text?: string;
   /**
    * Optional options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  txOptions?: TOptions
+  txOptions?: TOptions;
   /**
    * Children components.
    */
-  children?: ReactNode
+  children?: ReactNode;
 }
 
 const textVariants = cva("font-regular text-black dark:text-white", {
@@ -48,22 +48,22 @@ const textVariants = cva("font-regular text-black dark:text-white", {
   defaultVariants: {
     variant: "body1",
   },
-})
+});
 
 const Text = forwardRef(function Text(
   props: TextProps & VariantProps<typeof textVariants>,
   ref: ForwardedRef<RNText>,
 ) {
-  const { tx, className, variant, txOptions, text, children, ...rest } = props
+  const { tx, className, variant, txOptions, text, children, ...rest } = props;
 
-  const i18nText = tx && translate(tx, txOptions)
-  const content = i18nText || text || children
+  const i18nText = tx && translate(tx, txOptions);
+  const content = i18nText || text || children;
 
   return (
     <RNText className={cn(textVariants({ variant }), className)} {...rest} ref={ref}>
       {content}
     </RNText>
-  )
-})
+  );
+});
 
-export { Text }
+export { Text };

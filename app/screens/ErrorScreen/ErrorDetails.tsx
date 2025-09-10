@@ -1,16 +1,16 @@
-import { ErrorInfo } from "react"
-import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
+import { ErrorInfo } from "react";
+import { ScrollView, TextStyle, View, ViewStyle } from "react-native";
 
-import { Icon } from "@/components/Icon"
-import { Screen } from "@/components/Screen"
-import { Button, Text } from "@/components/ui"
-import { useAppTheme } from "@/theme/context"
-import type { ThemedStyle } from "@/theme/types"
+import { Icon } from "@/components/Icon";
+import { Screen } from "@/components/Screen";
+import { Button, Text } from "@/components/ui";
+import { useAppTheme } from "@/theme/context";
+import type { ThemedStyle } from "@/theme/types";
 
 export interface ErrorDetailsProps {
-  error: Error
-  errorInfo: ErrorInfo | null
-  onReset(): void
+  error: Error;
+  errorInfo: ErrorInfo | null;
+  onReset(): void;
 }
 
 /**
@@ -19,7 +19,7 @@ export interface ErrorDetailsProps {
  * @returns {JSX.Element} The rendered `ErrorDetails` component.
  */
 export function ErrorDetails(props: ErrorDetailsProps) {
-  const { themed } = useAppTheme()
+  const { themed } = useAppTheme();
   return (
     <Screen
       preset="fixed"
@@ -46,7 +46,7 @@ export function ErrorDetails(props: ErrorDetailsProps) {
 
       <Button style={themed($resetButton)} onPress={props.onReset} tx="errorScreen:reset" />
     </Screen>
-  )
+  );
 }
 
 const $contentContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
@@ -54,39 +54,39 @@ const $contentContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   paddingHorizontal: spacing.lg,
   paddingTop: spacing.xl,
   flex: 1,
-})
+});
 
 const $topSection: ViewStyle = {
   flex: 1,
   alignItems: "center",
-}
+};
 
 const $heading: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   color: colors.error,
   marginBottom: spacing.md,
-})
+});
 
 const $errorSection: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   flex: 2,
   backgroundColor: colors.separator,
   marginVertical: spacing.md,
   borderRadius: 6,
-})
+});
 
 const $errorSectionContentContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   padding: spacing.md,
-})
+});
 
 const $errorContent: ThemedStyle<TextStyle> = ({ colors }) => ({
   color: colors.error,
-})
+});
 
 const $errorBacktrace: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   marginTop: spacing.md,
   color: colors.textDim,
-})
+});
 
 const $resetButton: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   backgroundColor: colors.error,
   paddingHorizontal: spacing.xxl,
-})
+});

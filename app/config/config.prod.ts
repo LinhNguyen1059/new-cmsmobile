@@ -8,4 +8,4 @@
 export default {
   API_URL: "https://api.yourdomain.com/v1/",
   I3HOST_API_URL: "https://user-api.yourdomain.com/v1/",
-}
+};

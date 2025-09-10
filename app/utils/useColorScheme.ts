@@ -1,16 +1,16 @@
-import { useColorScheme as useNativewindColorScheme } from "nativewind"
+import { useColorScheme as useNativewindColorScheme } from "nativewind";
 
-import { colors } from "@/theme/colors"
+import { colors } from "@/theme/colors";
 
 function useColorScheme() {
-  const { colorScheme, setColorScheme: setNativewindColorScheme } = useNativewindColorScheme()
+  const { colorScheme, setColorScheme: setNativewindColorScheme } = useNativewindColorScheme();
 
   async function setColorScheme(colorScheme: "light" | "dark") {
-    setNativewindColorScheme(colorScheme)
+    setNativewindColorScheme(colorScheme);
   }
 
   function toggleColorScheme() {
-    return setColorScheme(colorScheme === "light" ? "dark" : "light")
+    return setColorScheme(colorScheme === "light" ? "dark" : "light");
   }
 
   return {
@@ -19,7 +19,7 @@ function useColorScheme() {
     setColorScheme,
     toggleColorScheme,
     colors: colors[colorScheme ?? "light"],
-  }
+  };
 }
 
-export { useColorScheme }
+export { useColorScheme };

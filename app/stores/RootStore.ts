@@ -1,6 +1,6 @@
-import { types, flow, Instance, SnapshotOut } from "mobx-state-tree"
+import { types, flow, Instance, SnapshotOut } from "mobx-state-tree";
 
-import { UserStore } from "./UserStore"
+import { UserStore } from "./UserStore";
 
 /**
  * RootStore combines all individual stores and manages application-wide state
@@ -18,11 +18,11 @@ export const RootStoreModel = types
     initialize: flow(function* () {
       try {
         // Initialize user store from storage
-        yield self.userStore.initializeUser()
+        yield self.userStore.initializeUser();
 
-        console.log("Root store initialized successfully")
+        console.log("Root store initialized successfully");
       } catch (error) {
-        console.error("Failed to initialize root store:", error)
+        console.error("Failed to initialize root store:", error);
       }
     }),
 
@@ -33,15 +33,15 @@ export const RootStoreModel = types
     reset: flow(function* () {
       try {
         // Clear user store
-        self.userStore.clearUser()
-        self.userStore.auth.clearFields()
+        self.userStore.clearUser();
+        self.userStore.auth.clearFields();
 
-        console.log("Root store reset successfully")
+        console.log("Root store reset successfully");
       } catch (error) {
-        console.error("Failed to reset root store:", error)
+        console.error("Failed to reset root store:", error);
       }
     }),
-  }))
+  }));
 
 /**
  * The RootStore instance.

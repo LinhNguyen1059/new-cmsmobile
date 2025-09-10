@@ -1,5 +1,5 @@
-import demoFr from "./demo-fr"
-import { Translations } from "./en"
+import demoFr from "./demo-fr";
+import { Translations } from "./en";
 
 const fr: Translations = {
   common: {
@@ -126,6 +126,6 @@ const fr: Translations = {
   },
 
   ...demoFr,
-}
+};
 
-export default fr
+export default fr;

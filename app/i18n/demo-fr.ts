@@ -1,4 +1,4 @@
-import { DemoTranslations } from "./demo-en"
+import { DemoTranslations } from "./demo-en";
 
 export const demoFr: DemoTranslations = {
   demoIcon: {
@@ -464,6 +464,6 @@ export const demoFr: DemoTranslations = {
       },
     },
   },
-}
+};
 
-export default demoFr
+export default demoFr;

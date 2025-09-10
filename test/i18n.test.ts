@@ -1,6 +1,6 @@
-import { exec } from "child_process"
+import { exec } from "child_process";
 
-import en from "../app/i18n/en"
+import en from "../app/i18n/en";
 
 // Use this array for keys that for whatever reason aren't greppable so they
 // don't hold your test suite hostage by always failing.
@@ -14,20 +14,20 @@ const EXCEPTIONS: string[] = [
    * because of a comment.
    */
   "hello",
-]
+];
 
 function iterate(obj, stack, array) {
   for (const property in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, property)) {
       if (typeof (obj as object)[property] === "object") {
-        iterate(obj[property], `${stack}.${property}`, array)
+        iterate(obj[property], `${stack}.${property}`, array);
       } else {
-        array.push(`${stack.slice(1)}.${property}`)
+        array.push(`${stack.slice(1)}.${property}`);
       }
     }
   }
 
-  return array
+  return array;
 }
 
 /**
@@ -55,21 +55,21 @@ describe("i18n", () => {
   test("There are no missing keys", (done) => {
     // Actual command output:
     // grep "[T\|t]x=[{]\?\"\S*\"[}]\?\|translate(\"\S*\"" -ohr './app' | grep -o "\".*\""
-    const command = `grep "[T\\|t]x=[{]\\?\\"\\S*\\"[}]\\?\\|translate(\\"\\S*\\"" -ohr './app' | grep -o "\\".*\\""`
+    const command = `grep "[T\\|t]x=[{]\\?\\"\\S*\\"[}]\\?\\|translate(\\"\\S*\\"" -ohr './app' | grep -o "\\".*\\""`;
     exec(command, (_, stdout) => {
-      const allTranslationsDefinedOld = iterate(en, "", [])
+      const allTranslationsDefinedOld = iterate(en, "", []);
       // Replace first instance of "." because of i18next namespace separator
-      const allTranslationsDefined = allTranslationsDefinedOld.map((key) => key.replace(".", ":"))
-      const allTranslationsUsed = stdout.replace(/"/g, "").split("\n")
-      allTranslationsUsed.splice(-1, 1)
+      const allTranslationsDefined = allTranslationsDefinedOld.map((key) => key.replace(".", ":"));
+      const allTranslationsUsed = stdout.replace(/"/g, "").split("\n");
+      allTranslationsUsed.splice(-1, 1);
 
       for (let i = 0; i < allTranslationsUsed.length; i += 1) {
         if (!EXCEPTIONS.includes(allTranslationsUsed[i])) {
           // You can add keys to EXCEPTIONS (above) if you don't want them included in the test
-          expect(allTranslationsDefined).toContainEqual(allTranslationsUsed[i])
+          expect(allTranslationsDefined).toContainEqual(allTranslationsUsed[i]);
         }
       }
-      done()
-    })
-  }, 240000)
-})
+      done();
+    });
+  }, 240000);
+});

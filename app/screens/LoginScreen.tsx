@@ -1,16 +1,16 @@
-import { FC } from "react"
+import { FC } from "react";
 
-import { Screen } from "@/components/Screen"
-import { Button, Input, Text } from "@/components/ui"
-import type { AppStackScreenProps } from "@/navigators/AppNavigator"
-import { useStores } from "@/stores"
+import { Screen } from "@/components/Screen";
+import { Button, Input, Text } from "@/components/ui";
+import type { AppStackScreenProps } from "@/navigators/AppNavigator";
+import { useStores } from "@/stores";
 
 interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
 
 export const LoginScreen: FC<LoginScreenProps> = () => {
   const {
     userStore: { setUser },
-  } = useStores()
+  } = useStores();
 
   const onLogin = () => {
     setUser({
@@ -18,8 +18,8 @@ export const LoginScreen: FC<LoginScreenProps> = () => {
       email: "user@example.com",
       firstName: "User",
       lastName: "Example",
-    })
-  }
+    });
+  };
 
   return (
     <Screen preset="auto" safeAreaEdges={["top", "bottom"]} className="px-4">
@@ -31,5 +31,5 @@ export const LoginScreen: FC<LoginScreenProps> = () => {
 
       <Button tx="loginScreen:logIn" className="mt-4" onPress={onLogin} />
     </Screen>
-  )
-}
+  );
+};

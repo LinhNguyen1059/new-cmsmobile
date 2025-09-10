@@ -1,62 +1,195 @@
-# Welcome to your new ignited app!
+# CMSMobile - React Native Application
 
-> The latest and greatest boilerplate for Infinite Red opinions
+> A modern, scalable React Native application built with Expo and powered by Infinite Red's Ignite framework
 
-This is the boilerplate that [Infinite Red](https://infinite.red) uses as a way to test bleeding-edge changes to our React Native stack.
+CMSMobile is a comprehensive React Native mobile application boilerplate that provides a solid foundation for building cross-platform mobile apps. Built on top of Expo SDK with TypeScript, MobX-State-Tree for state management, and a modern UI component library.
 
-- [Quick start documentation](https://github.com/infinitered/ignite/blob/master/docs/boilerplate/Boilerplate.md)
-- [Full documentation](https://github.com/infinitered/ignite/blob/master/docs/README.md)
+## 🚀 Key Features
 
-## Getting Started
+- **Modern Tech Stack**: React Native 0.79.4, Expo SDK 53, TypeScript 5.8.3
+- **State Management**: MobX-State-Tree with modular store architecture
+- **Navigation**: React Navigation 7 with type-safe routing
+- **UI Library**: Custom component library with Tailwind CSS (NativeWind)
+- **Internationalization**: Multi-language support with i18next
+- **Testing**: Jest for unit testing, Maestro for E2E testing
+- **Development Tools**: Reactotron, ESLint, Prettier
+- **Build System**: EAS Build with multiple environment configurations
+
+## 📚 Documentation
+
+- [Architecture Guide](./docs/ARCHITECTURE.md) - Detailed system architecture overview
+- [API Development Guide](./docs/API.md) - Services and data management patterns
+- [Component Library](./docs/COMPONENTS.md) - UI component documentation and examples
+- [Development Guidelines](./docs/DEVELOPMENT.md) - Coding standards and best practices
+- [Deployment Guide](./docs/DEPLOYMENT.md) - Build and deployment instructions
+
+## 🏁 Quick Start
+
+### Prerequisites
+
+- **Node.js**: v20.0.0 or higher
+- **Yarn**: v1.x or v3+
+- **Expo CLI**: Latest version
+- **Development Environment**:
+  - iOS: Xcode (for iOS development)
+  - Android: Android Studio (for Android development)
+
+### Installation
+
+1. **Clone and install dependencies:**
+
+   ```bash
+   git clone <repository-url>
+   cd CMSMobile
+   yarn install
+   ```
+
+2. **Start the development server:**
+
+   ```bash
+   yarn start
+   ```
+
+3. **Run on platforms:**
+
+   ```bash
+   # iOS Simulator
+   yarn ios
+
+   # Android Emulator
+   yarn android
+
+   # Web Browser
+   yarn web
+   ```
+
+### Development Builds
+
+For native development builds using EAS:
 
 ```bash
-yarn install
-yarn start
+# iOS Builds
+yarn build:ios:sim      # iOS Simulator build
+yarn build:ios:dev      # iOS Device (Development)
+yarn build:ios:prod     # iOS Device (Production)
+
+# Android Builds
+yarn build:android:sim  # Android Emulator build
+yarn build:android:dev  # Android Device (Development)
+yarn build:android:prod # Android Device (Production)
 ```
 
-To make things work on your local simulator, or on your phone, you need first to [run `eas build`](https://github.com/infinitered/ignite/blob/master/docs/expo/EAS.md). We have many shortcuts on `package.json` to make it easier:
+## 📁 Project Structure
+
+```
+CMSMobile/
+├── app/                    # Main application code
+│   ├── components/         # Reusable UI components
+│   │   ├── ui/            # Base UI components (Button, Text, Input, etc.)
+│   │   └── ...            # Complex components (Header, Screen, etc.)
+│   ├── config/            # App configuration (dev/prod environments)
+│   ├── i18n/              # Internationalization files
+│   ├── navigators/        # Navigation setup and routing
+│   ├── screens/           # Screen components
+│   ├── services/          # API services and data fetching
+│   │   └── api/           # API client and endpoints
+│   ├── stores/            # MobX-State-Tree stores
+│   │   ├── UserStore/     # User-related state management
+│   │   └── utils/         # Store utilities and hooks
+│   ├── theme/             # Theme configuration and styling
+│   └── utils/             # Utility functions and helpers
+├── assets/                # Static assets (icons, images)
+├── docs/                  # Project documentation
+├── ios/                   # iOS native code
+├── android/               # Android native code
+├── test/                  # Test configuration and utilities
+└── plugins/               # Expo config plugins
+```
+
+### Key Directories
+
+- **`app/components/ui/`**: Base UI components with consistent theming and TypeScript support
+- **`app/stores/`**: Modular MobX-State-Tree stores for state management
+- **`app/services/api/`**: API layer with type-safe service definitions
+- **`app/theme/`**: Comprehensive theming system with light/dark mode support
+- **`app/navigators/`**: Type-safe navigation with React Navigation 7
+
+## 🧪 Testing
+
+### Unit Tests
+
+Run Jest unit tests:
 
 ```bash
-yarn build:ios:sim # build for ios simulator
-yarn build:ios:dev # build for ios device
-yarn build:ios:prod # build for ios device
+yarn test          # Run tests once
+yarn test:watch    # Run tests in watch mode
 ```
 
-### `./assets` directory
+### End-to-End Tests
 
-This directory is designed to organize and store various assets, making it easy for you to manage and use them in your application. The assets are further categorized into subdirectories, including `icons` and `images`:
+Run Maestro E2E tests:
 
-```tree
-assets
-├── icons
-└── images
+```bash
+yarn test:maestro
 ```
 
-**icons**
-This is where your icon assets will live. These icons can be used for buttons, navigation elements, or any other UI components. The recommended format for icons is PNG, but other formats can be used as well.
+_Note: Follow the [Maestro Setup Guide](https://ignitecookbook.com/docs/recipes/MaestroSetup) for initial configuration._
 
-Ignite comes with a built-in `Icon` component. You can find detailed usage instructions in the [docs](https://github.com/infinitered/ignite/blob/master/docs/boilerplate/app/components/Icon.md).
+## 🛠 Development Scripts
 
-**images**
-This is where your images will live, such as background images, logos, or any other graphics. You can use various formats such as PNG, JPEG, or GIF for your images.
+```bash
+# Development
+yarn start                  # Start Expo development server
+yarn ios                   # Run on iOS simulator
+yarn android               # Run on Android emulator
+yarn web                   # Run on web browser
 
-Another valuable built-in component within Ignite is the `AutoImage` component. You can find detailed usage instructions in the [docs](https://github.com/infinitered/ignite/blob/master/docs/Components-AutoImage.md).
+# Code Quality
+yarn compile               # TypeScript compilation check
+yarn lint                  # Run ESLint with auto-fix
+yarn lint:check            # Run ESLint check only
+yarn prettier:check        # Check code formatting
+yarn prettier:write        # Format code with Prettier
+yarn pre-commit            # Run pre-commit checks
 
-How to use your `icon` or `image` assets:
+# Testing
+yarn test                  # Run unit tests
+yarn test:watch            # Run tests in watch mode
+yarn test:maestro          # Run E2E tests
 
-```typescript
-import { Image } from 'react-native';
-
-const MyComponent = () => {
-  return (
-    <Image source={require('assets/images/my_image.png')} />
-  );
-};
+# Build & Deploy
+yarn build:ios:sim         # Build for iOS simulator
+yarn build:android:dev     # Build for Android device
+yarn bundle:web            # Bundle for web deployment
 ```
 
-## Running Maestro end-to-end tests
+## 🔧 Configuration
 
-Follow our [Maestro Setup](https://ignitecookbook.com/docs/recipes/MaestroSetup) recipe.
+### Environment Configuration
+
+The app supports multiple environments:
+
+- **Development** (`config.dev.ts`): Development settings with debugging enabled
+- **Production** (`config.prod.ts`): Production optimized settings
+
+### Theme Configuration
+
+Customizable theming system supporting:
+
+- Light and dark themes
+- Typography scales
+- Color systems
+- Spacing and timing configurations
+
+## 📖 Learn More
+
+### Resources
+
+- [Expo Documentation](https://docs.expo.dev/)
+- [React Navigation](https://reactnavigation.org/)
+- [MobX-State-Tree](https://mobx-state-tree.js.org/)
+- [NativeWind](https://www.nativewind.dev/)
+- [Ignite Cookbook](https://ignitecookbook.com/)
 
 ## Next Steps
 
@@ -75,3 +208,11 @@ Read our [Upgrade Guide](https://ignitecookbook.com/docs/recipes/UpdatingIgnite)
 💬 Join us on [Slack](https://join.slack.com/t/infiniteredcommunity/shared_invite/zt-1f137np4h-zPTq_CbaRFUOR_glUFs2UA) to discuss.
 
 📰 Make our Editor-in-chief happy by [reading the React Native Newsletter](https://reactnativenewsletter.com/).
+
+## 📄 License
+
+[Add your license information here]
+
+---
+
+**Built with ❤️ using [Ignite](https://github.com/infinitered/ignite) by [Infinite Red](https://infinite.red)**

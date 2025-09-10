@@ -1,6 +1,6 @@
-import * as Linking from "expo-linking"
+import * as Linking from "expo-linking";
 
-export const prefix = Linking.createURL("/")
+export const prefix = Linking.createURL("/");
 export const config = {
   screens: {
     Login: {
@@ -8,4 +8,4 @@ export const config = {
     },
     Welcome: "welcome",
   },
-}
+};

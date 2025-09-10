@@ -1,6 +1,6 @@
-import { flow, getParent } from "mobx-state-tree"
+import { flow, getParent } from "mobx-state-tree";
 
-import { IAuth } from "./types"
+import { IAuth } from "./types";
 
 /**
  * Get the parent UserStore with proper typing
@@ -8,15 +8,15 @@ import { IAuth } from "./types"
 const getUserStore = (self: any) => {
   return getParent(self) as {
     setUser: (userData: {
-      id: string
-      email: string
-      firstName?: string
-      lastName?: string
-      avatar?: string
-    }) => void
-    clearUser: () => void
-  }
-}
+      id: string;
+      email: string;
+      firstName?: string;
+      lastName?: string;
+      avatar?: string;
+    }) => void;
+    clearUser: () => void;
+  };
+};
 
 /**
  * Basic actions for simple state mutations
@@ -26,21 +26,21 @@ export const authActions = (self: IAuth) => ({
    * Update auth fields
    */
   setEmail(email: string) {
-    self.email = email
+    self.email = email;
   },
 
   setPassword(password: string) {
-    self.password = password
+    self.password = password;
   },
 
   /**
    * Clear auth fields
    */
   clearFields() {
-    self.email = ""
-    self.password = ""
+    self.email = "";
+    self.password = "";
   },
-})
+});
 
 /**
  * Async actions
@@ -52,11 +52,11 @@ export const authAsyncActions = (self: IAuth) => ({
   login: flow(function* () {
     try {
       if (!self.email || !self.password) {
-        return { success: false, error: "Email and password are required" }
+        return { success: false, error: "Email and password are required" };
       }
 
       // Mock API call - replace with your actual API
-      yield new Promise((resolve) => setTimeout(resolve, 1000))
+      yield new Promise((resolve) => setTimeout(resolve, 1000));
 
       // Mock successful login - replace with actual API response
       const mockUser = {
@@ -64,19 +64,19 @@ export const authAsyncActions = (self: IAuth) => ({
         email: self.email,
         firstName: "John",
         lastName: "Doe",
-      }
+      };
 
       // Get parent UserStore and set the user
-      const userStore = getUserStore(self)
-      userStore.setUser(mockUser)
+      const userStore = getUserStore(self);
+      userStore.setUser(mockUser);
 
       // Clear password after successful login
-      self.password = ""
+      self.password = "";
 
-      return { success: true, user: mockUser }
+      return { success: true, user: mockUser };
     } catch (error: any) {
-      console.error("Login error:", error)
-      return { success: false, error: error.message || "Login failed" }
+      console.error("Login error:", error);
+      return { success: false, error: error.message || "Login failed" };
     }
   }),
 
@@ -86,15 +86,15 @@ export const authAsyncActions = (self: IAuth) => ({
   logout: flow(function* () {
     try {
       // Get parent UserStore and clear the user
-      const userStore = getUserStore(self)
-      userStore.clearUser()
+      const userStore = getUserStore(self);
+      userStore.clearUser();
 
       // Clear auth fields
-      self.clearFields?.()
-      return { success: true }
+      self.clearFields?.();
+      return { success: true };
     } catch (error: any) {
-      console.error("Logout error:", error)
-      return { success: false, error: error.message || "Logout failed" }
+      console.error("Logout error:", error);
+      return { success: false, error: error.message || "Logout failed" };
     }
   }),
-})
+});

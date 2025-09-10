@@ -6,20 +6,20 @@ import {
   useContext,
   useEffect,
   useMemo,
-} from "react"
-import { StyleProp, useColorScheme as useRNColorScheme } from "react-native"
+} from "react";
+import { StyleProp, useColorScheme as useRNColorScheme } from "react-native";
 import {
   DarkTheme as NavDarkTheme,
   DefaultTheme as NavDefaultTheme,
   Theme as NavTheme,
-} from "@react-navigation/native"
-import { useMMKVString } from "react-native-mmkv"
+} from "@react-navigation/native";
+import { useMMKVString } from "react-native-mmkv";
 
-import { storage } from "@/utils/storage"
-import { useColorScheme as useNativeWindColorScheme } from "@/utils/useColorScheme"
+import { storage } from "@/utils/storage";
+import { useColorScheme as useNativeWindColorScheme } from "@/utils/useColorScheme";
 
-import { setImperativeTheming } from "./context.utils"
-import { darkTheme, lightTheme } from "./theme"
+import { setImperativeTheming } from "./context.utils";
+import { darkTheme, lightTheme } from "./theme";
 import type {
   AllowedStylesT,
   ImmutableThemeContextModeT,
@@ -27,20 +27,20 @@ import type {
   ThemeContextModeT,
   ThemedFnT,
   ThemedStyle,
-} from "./types"
+} from "./types";
 
 export type ThemeContextType = {
-  navigationTheme: NavTheme
-  setThemeContextOverride: (newTheme: ThemeContextModeT) => void
-  theme: Theme
-  themeContext: ImmutableThemeContextModeT
-  themed: ThemedFnT
-}
+  navigationTheme: NavTheme;
+  setThemeContextOverride: (newTheme: ThemeContextModeT) => void;
+  theme: Theme;
+  themeContext: ImmutableThemeContextModeT;
+  themed: ThemedFnT;
+};
 
-export const ThemeContext = createContext<ThemeContextType | null>(null)
+export const ThemeContext = createContext<ThemeContextType | null>(null);
 
 export interface ThemeProviderProps {
-  initialContext?: ThemeContextModeT
+  initialContext?: ThemeContextModeT;
 }
 
 /**
@@ -57,10 +57,10 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
   initialContext,
 }) => {
   // The operating system theme:
-  const systemColorScheme = useRNColorScheme()
-  const { setColorScheme } = useNativeWindColorScheme()
+  const systemColorScheme = useRNColorScheme();
+  const { setColorScheme } = useNativeWindColorScheme();
   // Our saved theme context: can be "light", "dark", or undefined (system theme)
-  const [themeScheme, setThemeScheme] = useMMKVString("cms.themeScheme", storage)
+  const [themeScheme, setThemeScheme] = useMMKVString("cms.themeScheme", storage);
 
   /**
    * This function is used to set the theme context and is exported from the useAppTheme() hook.
@@ -70,11 +70,11 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
    */
   const setThemeContextOverride = useCallback(
     (newTheme: ThemeContextModeT) => {
-      setThemeScheme(newTheme)
-      setColorScheme(newTheme === "dark" ? "dark" : "light")
+      setThemeScheme(newTheme);
+      setColorScheme(newTheme === "dark" ? "dark" : "light");
     },
     [setThemeScheme, setColorScheme],
-  )
+  );
 
   /**
    * initialContext is the theme context passed in from the app.tsx file and always takes precedence.
@@ -82,54 +82,54 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
    * systemColorScheme is the value from the device. If undefined, we fall back to "light"
    */
   const themeContext: ImmutableThemeContextModeT = useMemo(() => {
-    const t = initialContext || themeScheme || "light"
-    return t === "dark" ? "dark" : "light"
-  }, [initialContext, themeScheme])
+    const t = initialContext || themeScheme || "light";
+    return t === "dark" ? "dark" : "light";
+  }, [initialContext, themeScheme]);
 
   const navigationTheme: NavTheme = useMemo(() => {
     switch (themeContext) {
       case "dark":
-        return NavDarkTheme
+        return NavDarkTheme;
       default:
-        return NavDefaultTheme
+        return NavDefaultTheme;
     }
-  }, [themeContext])
+  }, [themeContext]);
 
   const theme: Theme = useMemo(() => {
     switch (themeContext) {
       case "dark":
-        return darkTheme
+        return darkTheme;
       default:
-        return lightTheme
+        return lightTheme;
     }
-  }, [themeContext])
+  }, [themeContext]);
 
   useEffect(() => {
-    setImperativeTheming(theme)
-  }, [theme])
+    setImperativeTheming(theme);
+  }, [theme]);
 
   useEffect(() => {
     setThemeContextOverride(
       (themeScheme ? themeScheme : (systemColorScheme ?? "light")) as ThemeContextModeT,
-    )
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   const themed = useCallback(
     <T,>(styleOrStyleFn: AllowedStylesT<T>) => {
-      const flatStyles = [styleOrStyleFn].flat(3) as (ThemedStyle<T> | StyleProp<T>)[]
+      const flatStyles = [styleOrStyleFn].flat(3) as (ThemedStyle<T> | StyleProp<T>)[];
       const stylesArray = flatStyles.map((f) => {
         if (typeof f === "function") {
-          return (f as ThemedStyle<T>)(theme)
+          return (f as ThemedStyle<T>)(theme);
         } else {
-          return f
+          return f;
         }
-      })
+      });
       // Flatten the array of styles into a single object
-      return Object.assign({}, ...stylesArray) as T
+      return Object.assign({}, ...stylesArray) as T;
     },
     [theme],
-  )
+  );
 
   const value = {
     navigationTheme,
@@ -137,19 +137,19 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
     themeContext,
     setThemeContextOverride,
     themed,
-  }
+  };
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
-}
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+};
 
 /**
  * This is the primary hook that you will use to access the theme context in your components.
  * Documentation: https://docs.infinite.red/ignite-cli/boilerplate/app/theme/useAppTheme.tsx/
  */
 export const useAppTheme = () => {
-  const context = useContext(ThemeContext)
+  const context = useContext(ThemeContext);
   if (!context) {
-    throw new Error("useAppTheme must be used within an ThemeProvider")
+    throw new Error("useAppTheme must be used within an ThemeProvider");
   }
-  return context
-}
+  return context;
+};

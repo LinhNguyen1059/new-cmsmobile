@@ -1,15 +1,15 @@
-import { ApiResponse, ApisauceInstance, create } from "apisauce"
-import { AxiosRequestConfig } from "axios"
+import { ApiResponse, ApisauceInstance, create } from "apisauce";
+import { AxiosRequestConfig } from "axios";
 
-import Config from "@/config"
-import { navigationRef } from "@/navigators/navigationUtilities"
+import Config from "@/config";
+import { navigationRef } from "@/navigators/navigationUtilities";
 
-import type { ApiConfig } from "./types"
+import type { ApiConfig } from "./types";
 
 export const USER_API_CONFIG: ApiConfig = {
   url: Config.I3HOST_API_URL,
   timeout: 30000,
-}
+};
 
 /**
  * Manages all requests to Domain A (User Service).
@@ -17,12 +17,12 @@ export const USER_API_CONFIG: ApiConfig = {
  */
 
 export class I3HostApi {
-  apisauce: ApisauceInstance
-  config: ApiConfig
-  private logoutCallback?: () => void
+  apisauce: ApisauceInstance;
+  config: ApiConfig;
+  private logoutCallback?: () => void;
 
   constructor(config: ApiConfig = USER_API_CONFIG) {
-    this.config = config
+    this.config = config;
     this.apisauce = create({
       baseURL: this.config.url,
       timeout: this.config.timeout,
@@ -30,9 +30,9 @@ export class I3HostApi {
         "Accept": "application/json",
         "Content-Type": "application/json",
       },
-    })
+    });
 
-    this.setupInterceptors()
+    this.setupInterceptors();
   }
 
   /**
@@ -41,9 +41,9 @@ export class I3HostApi {
   private setupInterceptors() {
     this.apisauce.addResponseTransform((response) => {
       if (response.status === 401) {
-        this.handle401Error()
+        this.handle401Error();
       }
-    })
+    });
   }
 
   /**
@@ -51,12 +51,12 @@ export class I3HostApi {
    */
   private handle401Error() {
     if (__DEV__) {
-      console.log("🚀 ~ 401 Unauthorized")
+      console.log("🚀 ~ 401 Unauthorized");
     }
 
     // Call the logout callback if it's set
     if (this.logoutCallback) {
-      this.logoutCallback()
+      this.logoutCallback();
     }
 
     // Navigate to login screen
@@ -64,7 +64,7 @@ export class I3HostApi {
       navigationRef.reset({
         index: 0,
         routes: [{ name: "Login" as never }],
-      })
+      });
     }
   }
 
@@ -72,23 +72,23 @@ export class I3HostApi {
    * Set the logout callback function to be called on 401 errors
    */
   setLogoutCallback(callback: () => void) {
-    this.logoutCallback = callback
+    this.logoutCallback = callback;
   }
 
   setBaseURL(url: string) {
-    this.apisauce.setBaseURL(url)
+    this.apisauce.setBaseURL(url);
   }
 
   setHeaders(headers: Record<string, string>) {
-    this.apisauce.setHeaders(headers)
+    this.apisauce.setHeaders(headers);
   }
 
   setHeader(key: string, value: string) {
-    this.apisauce.setHeader(key, value)
+    this.apisauce.setHeader(key, value);
   }
 
   removeHeader(key: string) {
-    this.apisauce.deleteHeader(key)
+    this.apisauce.deleteHeader(key);
   }
 
   get<T = any>(
@@ -96,7 +96,7 @@ export class I3HostApi {
     params?: any,
     options?: AxiosRequestConfig<any>,
   ): Promise<ApiResponse<T>> {
-    return this.apisauce.get<T>(path, params, options)
+    return this.apisauce.get<T>(path, params, options);
   }
 
   post<T = any>(
@@ -104,7 +104,7 @@ export class I3HostApi {
     data?: any,
     options?: AxiosRequestConfig<any>,
   ): Promise<ApiResponse<T>> {
-    return this.apisauce.post<T>(path, data, options)
+    return this.apisauce.post<T>(path, data, options);
   }
 
   put<T = any>(
@@ -112,7 +112,7 @@ export class I3HostApi {
     data?: any,
     options?: AxiosRequestConfig<any>,
   ): Promise<ApiResponse<T>> {
-    return this.apisauce.put<T>(path, data, options)
+    return this.apisauce.put<T>(path, data, options);
   }
 
   delete<T = any>(
@@ -120,7 +120,7 @@ export class I3HostApi {
     params?: any,
     options?: AxiosRequestConfig<any>,
   ): Promise<ApiResponse<T>> {
-    return this.apisauce.delete<T>(path, params, options)
+    return this.apisauce.delete<T>(path, params, options);
   }
 
   patch<T = any>(
@@ -128,9 +128,9 @@ export class I3HostApi {
     data?: any,
     options?: AxiosRequestConfig<any>,
   ): Promise<ApiResponse<T>> {
-    return this.apisauce.patch<T>(path, data, options)
+    return this.apisauce.patch<T>(path, data, options);
   }
 }
 
 // Singleton instance
-export const i3hostApi = new I3HostApi()
+export const i3hostApi = new I3HostApi();

@@ -13,7 +13,12 @@ module.exports = {
   ],
   plugins: ["reactotron", "prettier"],
   rules: {
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        semi: true,
+      },
+    ],
     // typescript-eslint
     "@typescript-eslint/array-type": 0,
     "@typescript-eslint/ban-ts-comment": 0,
@@ -48,7 +53,7 @@ module.exports = {
           {
             name: "react-native",
             importNames: ["Text", "Button", "TextInput"],
-            message: "Use the custom wrapper component from '@/components'.",
+            message: "Use the custom wrapper component from '@/components/ui'.",
           },
         ],
       },
@@ -102,4 +107,4 @@ module.exports = {
     ],
     "import/newline-after-import": 1,
   },
-}
+};

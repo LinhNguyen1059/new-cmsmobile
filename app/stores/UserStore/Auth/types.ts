@@ -2,17 +2,17 @@
  * Auth models
  */
 export interface IAuthModel {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }
 
 /**
  * Auth basic actions (synchronous)
  */
 export interface IAuthActions {
-  setEmail?(email: string): void
-  setPassword?(password: string): void
-  clearFields?(): void
+  setEmail?(email: string): void;
+  setPassword?(password: string): void;
+  clearFields?(): void;
 }
 
 /**
@@ -20,19 +20,19 @@ export interface IAuthActions {
  */
 export interface IAuthAsyncActions {
   login?(): Promise<{
-    success: boolean
-    error?: string
+    success: boolean;
+    error?: string;
     user?: {
-      id: string
-      email: string
-      firstName: string
-      lastName: string
-    }
-  }>
+      id: string;
+      email: string;
+      firstName: string;
+      lastName: string;
+    };
+  }>;
   logout?(): Promise<{
-    success: boolean
-    error?: string
-  }>
+    success: boolean;
+    error?: string;
+  }>;
 }
 
 /**

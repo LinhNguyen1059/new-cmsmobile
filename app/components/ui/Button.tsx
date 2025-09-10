@@ -1,61 +1,61 @@
-import { ComponentType } from "react"
+import { ComponentType } from "react";
 import {
   Pressable,
   PressableProps,
   PressableStateCallbackType,
   StyleProp,
   ViewStyle,
-} from "react-native"
-import { cva, type VariantProps } from "class-variance-authority"
+} from "react-native";
+import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/utils/cn"
+import { cn } from "@/utils/cn";
 
-import { Text, TextProps } from "./Text"
+import { Text, TextProps } from "./Text";
 
 export interface ButtonAccessoryProps {
-  style?: StyleProp<any>
-  clasName?: string
-  pressableState: PressableStateCallbackType
-  disabled?: boolean
+  style?: StyleProp<any>;
+  clasName?: string;
+  pressableState: PressableStateCallbackType;
+  disabled?: boolean;
 }
 
 export interface BaseButtonProps extends PressableProps {
   /**
    * Text which is looked up via i18n.
    */
-  tx?: TextProps["tx"]
+  tx?: TextProps["tx"];
   /**
    * The text to display if not using `tx` or nested components.
    */
-  text?: TextProps["text"]
+  text?: TextProps["text"];
   /**
    * Optional options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  txOptions?: TextProps["txOptions"]
+  txOptions?: TextProps["txOptions"];
   /**
    * An optional component to render on the right side of the text.
    * Example: `RightAccessory={(props) => <View {...props} />}`
    */
-  RightAccessory?: ComponentType<ButtonAccessoryProps>
+  RightAccessory?: ComponentType<ButtonAccessoryProps>;
   /**
    * An optional component to render on the left side of the text.
    * Example: `LeftAccessory={(props) => <View {...props} />}`
    */
-  LeftAccessory?: ComponentType<ButtonAccessoryProps>
+  LeftAccessory?: ComponentType<ButtonAccessoryProps>;
   /**
    * Children components.
    */
-  children?: React.ReactNode
+  children?: React.ReactNode;
   /**
    * disabled prop, accessed directly for declarative styling reasons.
    * https://reactnative.dev/docs/pressable#disabled
    */
-  disabled?: boolean
+  disabled?: boolean;
   /**
    * An optional style override for the disabled state
    */
-  disabledStyle?: StyleProp<ViewStyle>
+  disabledStyle?: StyleProp<ViewStyle>;
 }
 
 const buttonVariants = cva(
@@ -84,7 +84,7 @@ const buttonVariants = cva(
       size: "default",
     },
   },
-)
+);
 
 const buttonTextVariants = cva("text-foreground font-medium text-sm", {
   variants: {
@@ -107,9 +107,9 @@ const buttonTextVariants = cva("text-foreground font-medium text-sm", {
     variant: "default",
     size: "default",
   },
-})
+});
 
-type ButtonProps = BaseButtonProps & VariantProps<typeof buttonVariants>
+type ButtonProps = BaseButtonProps & VariantProps<typeof buttonVariants>;
 
 function Button(props: ButtonProps) {
   const {
@@ -123,7 +123,7 @@ function Button(props: ButtonProps) {
     LeftAccessory,
     disabled,
     ...rest
-  } = props
+  } = props;
 
   return (
     <Pressable
@@ -158,8 +158,8 @@ function Button(props: ButtonProps) {
         </>
       )}
     </Pressable>
-  )
+  );
 }
 
-export { Button, buttonTextVariants, buttonVariants }
-export type { ButtonProps }
+export { Button, buttonTextVariants, buttonVariants };
+export type { ButtonProps };

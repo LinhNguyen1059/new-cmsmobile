@@ -14,31 +14,31 @@ if (__DEV__) {
   // Load Reactotron in development only.
   // Note that you must be using metro's `inlineRequires` for this to work.
   // If you turn it off in metro.config.js, you'll have to manually import it.
-  require("./devtools/ReactotronConfig.ts")
+  require("./devtools/ReactotronConfig.ts");
 }
-import "./utils/gestureHandler"
-import "../global.css"
+import "./utils/gestureHandler";
+import "../global.css";
 
-import { useEffect, useState } from "react"
-import { useFonts } from "expo-font"
-import * as SplashScreen from "expo-splash-screen"
-import { PortalHost } from "@rn-primitives/portal"
-import { KeyboardProvider } from "react-native-keyboard-controller"
-import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
+import { useEffect, useState } from "react";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import { PortalHost } from "@rn-primitives/portal";
+import { KeyboardProvider } from "react-native-keyboard-controller";
+import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context";
 
-import { initI18n } from "./i18n"
-import { AppNavigator } from "./navigators/AppNavigator"
-import { config, prefix } from "./navigators/linking"
-import { useNavigationPersistence } from "./navigators/navigationUtilities"
-import { useInitialRootStore } from "./stores/utils/useStores"
-import { ThemeProvider } from "./theme/context"
-import { customFontsToLoad } from "./theme/typography"
-import { loadDateFnsLocale } from "./utils/formatDate"
-import * as storage from "./utils/storage"
+import { initI18n } from "./i18n";
+import { AppNavigator } from "./navigators/AppNavigator";
+import { config, prefix } from "./navigators/linking";
+import { useNavigationPersistence } from "./navigators/navigationUtilities";
+import { useInitialRootStore } from "./stores/utils/useStores";
+import { ThemeProvider } from "./theme/context";
+import { customFontsToLoad } from "./theme/typography";
+import { loadDateFnsLocale } from "./utils/formatDate";
+import * as storage from "./utils/storage";
 
-export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
+export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE";
 
-SplashScreen.preventAutoHideAsync()
+SplashScreen.preventAutoHideAsync();
 
 /**
  * This is the root component of our app.
@@ -50,27 +50,31 @@ export function App() {
     initialNavigationState,
     onNavigationStateChange,
     isRestored: isNavigationStateRestored,
-  } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY)
+  } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY);
 
-  const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad)
-  const [isI18nInitialized, setIsI18nInitialized] = useState(false)
+  const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad);
+  const [isI18nInitialized, setIsI18nInitialized] = useState(false);
 
   useEffect(() => {
     initI18n()
       .then(() => setIsI18nInitialized(true))
-      .then(() => loadDateFnsLocale())
-  }, [])
+      .then(() => loadDateFnsLocale());
+  }, []);
 
-  const { rehydrated } = useInitialRootStore()
+  const { rehydrated } = useInitialRootStore();
 
   const loaded =
-    rehydrated && isNavigationStateRestored && isI18nInitialized && areFontsLoaded && !fontLoadError
+    rehydrated &&
+    isNavigationStateRestored &&
+    isI18nInitialized &&
+    areFontsLoaded &&
+    !fontLoadError;
 
   useEffect(() => {
     if (loaded) {
-      SplashScreen.hideAsync()
+      SplashScreen.hideAsync();
     }
-  }, [loaded])
+  }, [loaded]);
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
@@ -79,13 +83,13 @@ export function App() {
   // In Android: https://stackoverflow.com/a/45838109/204044
   // You can replace with your own loading component if you wish.
   if (!loaded) {
-    return null
+    return null;
   }
 
   const linking = {
     prefixes: [prefix],
     config,
-  }
+  };
 
   // otherwise, we're ready to render the app
   return (
@@ -101,5 +105,5 @@ export function App() {
         </ThemeProvider>
       </KeyboardProvider>
     </SafeAreaProvider>
-  )
+  );
 }

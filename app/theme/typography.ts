@@ -1,14 +1,14 @@
 // TODO: write documentation about fonts and typography along with guides on how to add custom fonts in own
 // markdown file and add links from here
 
-import { Platform } from "react-native"
+import { Platform } from "react-native";
 import {
   Roboto_300Light as RobotoLight,
   Roboto_400Regular as RobotoRegular,
   Roboto_500Medium as RobotoMedium,
   Roboto_600SemiBold as RobotoSemiBold,
   Roboto_700Bold as RobotoBold,
-} from "@expo-google-fonts/roboto"
+} from "@expo-google-fonts/roboto";
 
 export const customFontsToLoad = {
   RobotoLight,
@@ -16,7 +16,7 @@ export const customFontsToLoad = {
   RobotoMedium,
   RobotoSemiBold,
   RobotoBold,
-}
+};
 
 const fonts = {
   Roboto: {
@@ -49,7 +49,7 @@ const fonts = {
     // Android only font.
     normal: "monospace",
   },
-}
+};
 
 export const typography = {
   /**
@@ -68,4 +68,4 @@ export const typography = {
    * Lets get fancy with a monospace font!
    */
   code: Platform.select({ ios: fonts.courier, android: fonts.monospace }),
-}
+};

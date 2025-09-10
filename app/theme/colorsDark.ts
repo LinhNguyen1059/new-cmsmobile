@@ -50,4 +50,4 @@ export const colors = {
   "neutral-300": "#a6aaa9",
   "neutral-400": "#898e8c",
   "neutral-500": "#6b726f",
-}
+};

@@ -1,9 +1,9 @@
-import { Platform, View } from "react-native"
-import * as CheckboxPrimitive from "@rn-primitives/checkbox"
+import { Platform, View } from "react-native";
+import * as CheckboxPrimitive from "@rn-primitives/checkbox";
 
-import { cn } from "@/utils/cn"
+import { cn } from "@/utils/cn";
 
-const DEFAULT_HIT_SLOP = 24
+const DEFAULT_HIT_SLOP = 24;
 
 function Checkbox({
   className,
@@ -12,8 +12,8 @@ function Checkbox({
   ...props
 }: CheckboxPrimitive.RootProps &
   React.RefAttributes<CheckboxPrimitive.RootRef> & {
-    checkedClassName?: string
-    indicatorClassName?: string
+    checkedClassName?: string;
+    indicatorClassName?: string;
   }) {
   return (
     <CheckboxPrimitive.Root
@@ -36,7 +36,7 @@ function Checkbox({
         <View className="h-1 w-1 bg-primary" />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
-  )
+  );
 }
 
-export { Checkbox }
+export { Checkbox };

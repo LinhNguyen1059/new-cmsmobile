@@ -2,18 +2,18 @@
  * User models
  */
 export interface IUserModel {
-  id?: string
-  email?: string
-  firstName?: string
-  lastName?: string
-  avatar?: string
+  id?: string;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  avatar?: string;
 }
 
 /**
  * User views (computed properties)
  */
 export interface IUserViews {
-  readonly fullname: string
+  readonly fullname: string;
 }
 
 /**
@@ -21,27 +21,27 @@ export interface IUserViews {
  */
 export interface IUserActions {
   updateUserFields?(updates: {
-    firstName?: string
-    lastName?: string
-    avatar?: string
-    email?: string
-  }): void
+    firstName?: string;
+    lastName?: string;
+    avatar?: string;
+    email?: string;
+  }): void;
 }
 
 /**
  * User async actions
  */
 export interface IUserAsyncActions {
-  hydrate?(): Promise<void>
+  hydrate?(): Promise<void>;
   updateUserProfile?(updates: {
-    firstName?: string
-    lastName?: string
-    avatar?: string
-    email?: string
+    firstName?: string;
+    lastName?: string;
+    avatar?: string;
+    email?: string;
   }): Promise<{
-    success: boolean
-    error?: string
-  }>
+    success: boolean;
+    error?: string;
+  }>;
 }
 
 /**

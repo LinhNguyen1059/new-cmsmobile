@@ -1,4 +1,4 @@
-import { IUserModel } from "./types"
+import { IUserModel } from "./types";
 
 /**
  * UserStore Views - Computed values and getters
@@ -8,8 +8,8 @@ import { IUserModel } from "./types"
 export const userViews = (self: IUserModel) => ({
   get fullname() {
     if (!self) {
-      return ""
+      return "";
     }
-    return `${self?.firstName} ${self?.lastName}`
+    return `${self?.firstName} ${self?.lastName}`;
   },
-})
+});

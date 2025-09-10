@@ -1,8 +1,8 @@
-import { types } from "mobx-state-tree"
+import { types } from "mobx-state-tree";
 
-import { withSetPropAction } from "@/stores/utils/withSetPropAction"
+import { withSetPropAction } from "@/stores/utils/withSetPropAction";
 
-import { authActions, authAsyncActions } from "./action"
+import { authActions, authAsyncActions } from "./action";
 
 export const AuthModel = types
   .model("Auth")
@@ -12,4 +12,4 @@ export const AuthModel = types
   })
   .actions(withSetPropAction)
   .actions(authActions)
-  .actions(authAsyncActions)
+  .actions(authAsyncActions);

@@ -1,9 +1,9 @@
-import { types } from "mobx-state-tree"
+import { types } from "mobx-state-tree";
 
-import { withSetPropAction } from "@/stores/utils/withSetPropAction"
+import { withSetPropAction } from "@/stores/utils/withSetPropAction";
 
-import { userActions, userAsyncActions } from "./action"
-import { userViews } from "./view"
+import { userActions, userAsyncActions } from "./action";
+import { userViews } from "./view";
 
 export const UserModel = types
   .model("User")
@@ -17,4 +17,4 @@ export const UserModel = types
   .views(userViews)
   .actions(withSetPropAction)
   .actions(userActions)
-  .actions(userAsyncActions)
+  .actions(userAsyncActions);

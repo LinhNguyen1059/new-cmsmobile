@@ -1,7 +1,7 @@
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react";
 
-import { RootStore, RootStoreModel } from "../RootStore"
-import { setupRootStore } from "./setupRootStore"
+import { RootStore, RootStoreModel } from "../RootStore";
+import { setupRootStore } from "./setupRootStore";
 
 /**
  * Create the initial (empty) global RootStore instance here.
@@ -16,13 +16,13 @@ import { setupRootStore } from "./setupRootStore"
  * instantiating it, although that should be rare.
  */
 // @ts-ignore
-const _rootStore = RootStoreModel.create({})
+const _rootStore = RootStoreModel.create({});
 
 /**
  * The RootStoreContext provides a way to access
  * the RootStore in any screen or component.
  */
-const RootStoreContext = createContext<RootStore>(_rootStore)
+const RootStoreContext = createContext<RootStore>(_rootStore);
 
 /**
  * You can use this Provider to specify a *different* RootStore
@@ -30,7 +30,7 @@ const RootStoreContext = createContext<RootStore>(_rootStore)
  * this Provider & custom RootStore instances would only be used in
  * testing scenarios.
  */
-export const RootStoreProvider = RootStoreContext.Provider
+export const RootStoreProvider = RootStoreContext.Provider;
 
 /**
  * A hook that screens and other components can use to gain access to
@@ -42,7 +42,7 @@ export const RootStoreProvider = RootStoreContext.Provider
  *
  * const { someStore, someOtherStore } = useStores()
  */
-export const useStores = () => useContext(RootStoreContext)
+export const useStores = () => useContext(RootStoreContext);
 
 /**
  * Used only in the app.tsx file, this hook sets up the RootStore
@@ -52,43 +52,43 @@ export const useStores = () => useContext(RootStoreContext)
  * @returns {object} - the RootStore and rehydrated state
  */
 export const useInitialRootStore = (callback?: () => void | Promise<void>) => {
-  const rootStore = useStores()
-  const [rehydrated, setRehydrated] = useState(false)
+  const rootStore = useStores();
+  const [rehydrated, setRehydrated] = useState(false);
 
   // Kick off initial async loading actions, like loading fonts and rehydrating RootStore
   useEffect(() => {
-    let _unsubscribe: () => void | undefined
-    ;(async () => {
+    let _unsubscribe: () => void | undefined;
+    (async () => {
       try {
         // set up the RootStore (returns the state restored from Storage)
-        const { unsubscribe } = await setupRootStore(rootStore)
-        _unsubscribe = unsubscribe
+        const { unsubscribe } = await setupRootStore(rootStore);
+        _unsubscribe = unsubscribe;
 
         // reactotron integration with the MST root store (DEV only)
         if (__DEV__ && console.tron && console.tron.trackMstNode) {
           // eslint-disable-next-line reactotron/no-tron-in-production
-          console.tron.trackMstNode(rootStore)
+          console.tron.trackMstNode(rootStore);
         }
 
         // let the app know we've finished rehydrating
-        setRehydrated(true)
+        setRehydrated(true);
 
         // invoke the callback, if provided
-        if (callback) callback()
+        if (callback) callback();
       } catch (error) {
         if (__DEV__) {
-          console.log("🚀 ~ useInitialRootStore ~ error:", error)
+          console.log("🚀 ~ useInitialRootStore ~ error:", error);
         }
       }
-    })()
+    })();
 
     return () => {
       // cleanup
-      if (_unsubscribe !== undefined) _unsubscribe()
-    }
+      if (_unsubscribe !== undefined) _unsubscribe();
+    };
     // only runs on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
-  return { rootStore, rehydrated }
-}
+  return { rootStore, rehydrated };
+};

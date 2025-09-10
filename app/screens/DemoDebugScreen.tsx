@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo } from "react"
+import { FC, useCallback, useMemo } from "react";
 import {
   LayoutAnimation,
   Linking,
@@ -7,39 +7,39 @@ import {
   useColorScheme,
   View,
   ViewStyle,
-} from "react-native"
-import * as Application from "expo-application"
+} from "react-native";
+import * as Application from "expo-application";
 
-import { ListItem } from "@/components/ListItem"
-import { Screen } from "@/components/Screen"
-import { Button, Text } from "@/components/ui"
-import { isRTL } from "@/i18n"
-import { DemoTabScreenProps } from "@/navigators/DemoNavigator"
-import { useStores } from "@/stores"
-import { useAppTheme } from "@/theme/context"
-import { $styles } from "@/theme/styles"
-import type { ThemedStyle } from "@/theme/types"
+import { ListItem } from "@/components/ListItem";
+import { Screen } from "@/components/Screen";
+import { Button, Text } from "@/components/ui";
+import { isRTL } from "@/i18n";
+import { DemoTabScreenProps } from "@/navigators/DemoNavigator";
+import { useStores } from "@/stores";
+import { useAppTheme } from "@/theme/context";
+import { $styles } from "@/theme/styles";
+import type { ThemedStyle } from "@/theme/types";
 
 /**
  * @param {string} url - The URL to open in the browser.
  * @returns {void} - No return value.
  */
 function openLinkInBrowser(url: string) {
-  Linking.canOpenURL(url).then((canOpen) => canOpen && Linking.openURL(url))
+  Linking.canOpenURL(url).then((canOpen) => canOpen && Linking.openURL(url));
 }
 
-const usingHermes = typeof HermesInternal === "object" && HermesInternal !== null
+const usingHermes = typeof HermesInternal === "object" && HermesInternal !== null;
 
 export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function DemoDebugScreen(
   _props,
 ) {
   const {
     userStore: { clearUser },
-  } = useStores()
-  const { setThemeContextOverride, themeContext, themed } = useAppTheme()
+  } = useStores();
+  const { setThemeContextOverride, themeContext, themed } = useAppTheme();
 
   // @ts-expect-error
-  const usingFabric = global.nativeFabricUIManager != null
+  const usingFabric = global.nativeFabricUIManager != null;
 
   const demoReactotron = useMemo(
     () => async () => {
@@ -54,23 +54,23 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
             hermesEnabled: usingHermes,
           },
           important: true,
-        })
+        });
       }
     },
     [],
-  )
+  );
 
   const toggleTheme = useCallback(() => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut) // Animate the transition
-    setThemeContextOverride(themeContext === "dark" ? "light" : "dark")
-  }, [themeContext, setThemeContextOverride])
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut); // Animate the transition
+    setThemeContextOverride(themeContext === "dark" ? "light" : "dark");
+  }, [themeContext, setThemeContextOverride]);
 
   // Resets the theme to the system theme
-  const colorScheme = useColorScheme()
+  const colorScheme = useColorScheme();
   const resetTheme = useCallback(() => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
-    setThemeContextOverride(undefined)
-  }, [setThemeContextOverride])
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setThemeContextOverride(undefined);
+  }, [setThemeContextOverride]);
 
   return (
     <Screen
@@ -150,42 +150,42 @@ export const DemoDebugScreen: FC<DemoTabScreenProps<"DemoDebug">> = function Dem
         <Button style={themed($button)} tx="common:logOut" onPress={clearUser} />
       </View>
     </Screen>
-  )
-}
+  );
+};
 
 const $container: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   paddingBottom: spacing.xxl,
-})
+});
 
 const $title: ThemedStyle<TextStyle> = ({ spacing }) => ({
   marginBottom: spacing.xxl,
-})
+});
 
 const $reportBugsLink: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   color: colors.tint,
   marginBottom: spacing.lg,
   alignSelf: isRTL ? "flex-start" : "flex-end",
-})
+});
 
 const $item: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginBottom: spacing.md,
-})
+});
 
 const $itemsContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginVertical: spacing.xl,
-})
+});
 
 const $button: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginBottom: spacing.xs,
-})
+});
 
 const $buttonContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   marginBottom: spacing.md,
-})
+});
 
 const $hint: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   color: colors.neutral600,
   fontSize: 12,
   lineHeight: 15,
   paddingBottom: spacing.lg,
-})
+});
